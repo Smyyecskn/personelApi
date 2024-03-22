@@ -28,7 +28,7 @@ module.exports = {
           departmentId: req.body.departmentId, //! filter kısmı departmant ıd'ye ve islead'i true olana göre FİLTRELEDİK.Bir bölümün içindekileri seçicez o yuzdden departmentId'ye göre filtreledik.
           isLead: true,
         },
-        { isLead: false }
+        { isLead: false } //!gerçekleştirilecek durum
       );
     }
 
@@ -56,7 +56,7 @@ module.exports = {
         { departmentId: 1 }
       );
       await Personnel.updateMany(
-        { departmentId, isLead: true },
+        { departmentId, isLead: true }, //!gerçekleştirilecek olay
         { isLead: false }
       );
     }

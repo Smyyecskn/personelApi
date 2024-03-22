@@ -6,7 +6,8 @@
 const Personnel = require("../models/personnel.model");
 const Token = require("../models/token.model");
 
-const passwordEncrypt = require("../helpers/passwordEncrypt");
+const passwordEncrypt = require("../helpers/passwordEncrypt"); //altta tokenData oluşturmak için import ettik.
+
 module.exports = {
   // LOGIN & LOGOUT
   login: async (req, res) => {
@@ -29,26 +30,29 @@ module.exports = {
         /***TOKEN***/
         // 1 USERA 1 TOKEN VERMELİSİN.
 
-        let tokenData = await Token.findOne({ userId: user._id });
-        console.log(user._id); //dbde bulundan userId , kullanıcının bana verdiği token user._id
+        let tokenData = await Token.findOne({ userId: user._id }); //token varsa oluşturma
+        //! console.log(user._id);Tokenın userId sini eşitle user._id ye göre,(Tokenda olan userId eşit mi personel modelındekı (personele göre unique) oluşturulan id ile , kullanıcı username ve passwordu dogru girerse bize user bilgilerini veren obje response döner 45de gonderdık )
         if (!tokenData) {
+          //token yoksa oluştur else e GEREK YOK.
           const tokenKey = passwordEncrypt(user._id + Date.now()); //benzersiz birşey koymam lazım.şifrelemezsem tahmin edilebilir.
-          console.log(typeof tokenKey, tokenKey);
-          tokenData = await Token.create({ userId: user._id, token: tokenKey });
+          // console.log(typeof tokenKey, tokenKey);
+          tokenData = await Token.create({ userId: user._id, token: tokenKey }); //token oluşturduk
         }
 
         /***TOKEN***/
 
         res.status(200).send({
           error: false,
-          user,
-          tokens: tokenData.token,
+          user, //32den gelen user respose donen objeye user ismi verdik.
+          tokens: tokenData.token, //token oluşturduk FE'ye biz bunu response döndük.
         });
       } else {
+        // user veya password yanlış girildiyse
         res.errorStatusCode = 401;
         throw new Error("Wrong Username or Password.");
       }
     } else {
+      //username ve password hiç yoksa
       res.errorStatusCode = 401;
       throw new Error("Please entry username and password.");
     }
