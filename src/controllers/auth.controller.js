@@ -30,7 +30,7 @@ module.exports = {
         // 1 USERA 1 TOKEN VERMELİSİN.
 
         let tokenData = await Token.findOne({ userId: user._id });
-
+        console.log(user._id); //dbde bulundan userId , kullanıcının bana verdiği token user._id
         if (!tokenData) {
           const tokenKey = passwordEncrypt(user._id + Date.now()); //benzersiz birşey koymam lazım.şifrelemezsem tahmin edilebilir.
           console.log(typeof tokenKey, tokenKey);

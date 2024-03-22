@@ -4,6 +4,7 @@
 ------------------------------------------------------- */
 //!(Authentication) Kimlik doğrulama, bir kullanıcının kimlik bilgilerini doğrulama sürecidir.
 //!(Authorization) Yetkilendirme, bir kullanıcının belirli kaynaklara erişim iznini kontrol etme sürecidir.
+//dosya ismi auth.js olmalı çogul kullanmıyoruz.
 
 const router = require("express").Router();
 

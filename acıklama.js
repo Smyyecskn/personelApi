@@ -20,4 +20,5 @@
 //tokenlarda controllera gerek yok.AMA biz öğrenmek için yazdık. Bütün methodları yaptık içinde.
 
 //!ROUTER
-// Ana routerlarımızı routes dosyası içinde index içine taşıdık.
+//Ana routerlarımızı routes dosyası içinde index içine taşıdık.
+//mutlaka router ! kullanıp export etmek lazım.
