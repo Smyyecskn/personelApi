@@ -33,9 +33,9 @@ module.exports = (req, res, next) => {
 
   // Run SearchingSortingPagination engine for Model:
   res.getModelList = async function (
-    Model,
-    customFilter = {},
-    populate = null
+    Model, //Personnel,
+    customFilter = {}, //{ departmentId: req.params.id }
+    populate = null // "departmentId"  birleştir ki bizim department bilgileri gelsin
   ) {
     const filtersAndSearch = { ...filter, ...search, ...customFilter };
 

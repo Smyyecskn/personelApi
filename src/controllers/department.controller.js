@@ -61,14 +61,14 @@ module.exports = {
   personnels: async (req, res) => {
     const Personnel = require("../models/personnel.model"); //departmente göre personellerini filtreledik.
     const data = await res.getModelList(
-      Personnel,
-      { departmentId: req.params.id },
-      "departmentId"
+      Personnel, //findSearchSortPage'e parametre olarak gönderdik.
+      { departmentId: req.params.id }, //personel modelden gelen department idye kullanıcın girdiği id eşit mi
+      "departmentId" // birleştir ki bizim department bilgileri gelsin
     );
     res.status(200).send({
       error: false,
       detail: await res.getModelListDetails(Personnel, {
-        departmentId: req.params.id,
+        departmentId: req.params.id, //departmentId'yi kullanıcıdan gelen idye eşitle department router de oraya /:id/personnels yazdık ya o kısmı yapıyoruz.
       }),
       data,
     });
