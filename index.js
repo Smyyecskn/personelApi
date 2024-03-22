@@ -54,13 +54,13 @@ dbConnection();
 //   morgan("combined", {
 //     stream: fs.createWriteStream(`./logs/${today}.log`, { flags: "a+" }),
 //   })
-// ); //yapılan ziyaretler gunbe gun tutuluyor. Ziyaret bilgileri tutulur.
+// ); //yapılan ziyaretler gun be gun tutuluyor. Ziyaret bilgileri tutulur.
 require("./src/middlewares/loggin");
 
 /* ------------------------------------------------------- */
 
 //DOCUMENTATION
-//  $ npm i swagger-autogen
+// $ npm i swagger-autogen
 //   $ npm i swagger-ui-express
 // $ npm i redoc-express
 
