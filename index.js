@@ -80,6 +80,9 @@ app.use(require("cookie-session")({ secret: process.env.SECRET_KEY }));
 // res.getModelList
 app.use(require("./src/middlewares/findSearchSortPage"));
 
+//routes içindeki index dosyası
+app.use(require("./src/routes/"));
+
 /* ------------------------------------------------------- *
 // Authentication (SessionCookies):
 // Login/Logout Control Middleware
@@ -111,7 +114,6 @@ app.use(async (req, res, next) => {
 // personnel
 // app.use("/personnels", require("./src/routes/personnel.router"));
 // routes/index.js
-app.use(require("./src/routes/"));
 
 /* ------------------------------------------------------- */
 
