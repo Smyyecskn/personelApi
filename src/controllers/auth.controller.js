@@ -16,7 +16,8 @@ module.exports = {
     if (username && password) {
       //? findOne, passwordu modeldeki set metodundaki encrypt i kullanarak db'de filtreleme yapar. //!findOne passwordu modeldekı set metodundakı encrypti kullandı db'de filtreleme yaptı. set passwordu GÜNCELLEDİ.
 
-      const user = await Personnel.findOne({ username, password }); //set metodunu kullandıgımız için şifreli kullanmaya gerek kalmadı.
+      const user = await Personnel.findOne({ username, password }); //set metodunu kullandıgımız için şifreli kullanmaya gerek kalmadı.//! en başta usere burda değer atadık
+      // console.log(user);
       if (user && user.isActive) {
         /* SESSION //sesıon cookıe istemeyiz.
                 

@@ -62,9 +62,10 @@ module.exports = {
     }
 
     if (!req.user.isAdmin) {
-      req.body.isAdmin = false;
-      delete req.body.salary;
-      delete req.body.isLead;
+      //gelen user(personnel) admin değilse, personel kendi bilgilerini rahat rahat değiştirmesin,adminse değişiklik yapılabilecek.
+      // req.body.isAdmin = false; //admin hep false da kalsın.
+      delete req.body.salary; //maasını değiştirmesin değiştirse bile req.bodyden sildim.
+      // delete req.body.isLead;
     }
 
     const data = await Personnel.updateOne({ _id: req.params.id }, req.body, {

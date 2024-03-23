@@ -22,22 +22,30 @@ require("express-async-errors");
 const { dbConnection } = require("./src/configs/dbConnection");
 dbConnection();
 /* ------------------------------------------------------- */
-//MORGAN LOGGING = npm i morgan (gelen her ziyaretcının girdi çıktı bilgilerini bana verir.Log kayıtlarını tutar.)
+//MORGAN LOGGING = npm i morgan (MİDDLEWAREDİR.gelen her ziyaretcının girdi çıktı bilgilerini bana verir.Log kayıtlarını tutar.)
 // https://expressjs.com/en/resources/middleware/morgan.html
 // https://github.com/expressjs/morgan
 
-// const morgan = require("morgan");
-// app.use(morgan("combined"));
+const morgan = require("morgan");
+app.use(morgan()); //bu şekilde çağrılıyordu ama deprecated oldu. hata olsada olmasada log kaydı tutulur.
+// app.use(morgan("combined")); //en geniş detaydan en aza dogru
 // app.use(morgan("common"));
 // app.use(morgan("short"));
 // app.use(morgan("tiny"));
+
+//!log kaydı örnekler:
+// EXAMPLE: sadece hata aldıklarının log kaydını tutmak için
+// morgan('combined', {
+//   skip: function (req, res) { return res.statusCode < 400 }
+// })
+//!log kaydımı kendim tutabilmem için
 // app.use(
 //   morgan(
 //     `IP=:remote-addr | TIME=:date[clf] | METHOD=:method | URL=:url | STATUS=:status | LENGTH=:res[content-length] | REF=:referrer |  AGENT=:user-agent`
 //   )
 // );
 
-//? Write to Log File
+//? Write to Log File Log kaydını biryere kaydetmeliyim.Dosyaya yazmaz bunun modulu fs
 // const fs = require("node:fs");
 // app.use(
 //   morgan("combined", {

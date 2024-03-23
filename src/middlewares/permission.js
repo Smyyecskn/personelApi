@@ -44,6 +44,8 @@ module.exports = {
   isAdminOrOwn: (req, res, next) => {
     const personnelId = req.params?.id;
 
+    // console.log(req.user);
+
     if (
       req.user &&
       req.user.isActive &&
