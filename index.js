@@ -10,65 +10,75 @@
 
 const express = require("express");
 const app = express();
-/* ------------------------------------------------------- */
-require("dotenv").config();
-const PORT = process.env.PORT || 8000;
 
-// errorHandler import ettik.
+/* ------------------------------------------------------- */
+// Required Modules:
+
+// envVariables to process.env:
+require("dotenv").config();
+const PORT = process.env?.PORT || 8000;
+
+// asyncErrors to errorHandler:
 require("express-async-errors");
 
 /* ------------------------------------------------------- */
+// Configrations:
+
 // Connect to DB:
 const { dbConnection } = require("./src/configs/dbConnection");
 dbConnection();
-/* ------------------------------------------------------- */
-//MORGAN LOGGING = npm i morgan (MİDDLEWAREDİR.gelen her ziyaretcının girdi çıktı bilgilerini bana verir.Log kayıtlarını tutar.)
+
+/* ------------------------------------------------------- *
+//* MORGAN LOGGING
 // https://expressjs.com/en/resources/middleware/morgan.html
 // https://github.com/expressjs/morgan
+//? $ npm i morgan
 
-const morgan = require("morgan");
-app.use(morgan()); //bu şekilde çağrılıyordu ama deprecated oldu. hata olsada olmasada log kaydı tutulur.
-// app.use(morgan("combined")); //en geniş detaydan en aza dogru
-// app.use(morgan("common"));
-// app.use(morgan("short"));
-// app.use(morgan("tiny"));
+const morgan = require('morgan')
 
-//!log kaydı örnekler:
-// EXAMPLE: sadece hata aldıklarının log kaydını tutmak için
-// morgan('combined', {
-//   skip: function (req, res) { return res.statusCode < 400 }
-// })
-//!log kaydımı kendim tutabilmem için
-// app.use(
-//   morgan(
-//     `IP=:remote-addr | TIME=:date[clf] | METHOD=:method | URL=:url | STATUS=:status | LENGTH=:res[content-length] | REF=:referrer |  AGENT=:user-agent`
-//   )
-// );
+// app.use(morgan('combined')) //bu şekilde çağrılıyordu ama deprecated oldu. hata olsada olmasada log kaydı tutulur.
+// app.use(morgan('common'))
+// app.use(morgan('dev'))
+// app.use(morgan('short'))
+// app.use(morgan('tiny'))
+ //!log kaydımı kendim yazıp tutabilmem için
+// app.use(morgan('IP=:remote-addr | TIME=:date[clf] | METHOD=:method | URL=:url | STATUS=:status | LENGTH=:res[content-length] | REF=:referrer | AGENT=":user-agent"'))
+!log kaydı örnekler: // // EXAMPLE: sadece hata aldıklarının log kaydını tutmak için //
+//  morgan('combined', {
+// // skip: function (req, res) { return res.statusCode < 400 }
+// // })
 
-//? Write to Log File Log kaydını biryere kaydetmeliyim.Dosyaya yazmaz bunun modulu fs
-// const fs = require("node:fs");
-// app.use(
-//   morgan("combined", {
-//     stream: fs.createWriteStream("./access.log", { flags: "a+"})})
-// );
-// const fs = require("node:fs");
-// const now = new Date();
-// // console.log(now, typeof now);
-// const today = now.toISOString().split("T")[0];
-// app.use(
-//   morgan("combined", {
-//     stream: fs.createWriteStream(`./logs/${today}.log`, { flags: "a+" }),
-//   })
-// ); //yapılan ziyaretler gun be gun tutuluyor. Ziyaret bilgileri tutulur.
-require("./src/middlewares/loggin");
+Write to log file: Log kaydını bir DOSYAYA kaydetmeliyim.Dosyaya yazmaz bunun modulu fs
+
+// const fs = require('node:fs')
+// app.use(morgan('combined', {
+//     stream: fs.createWriteStream('./access.log', { flags: 'a+' })
+// }))
+
+/? Write to file day by day: //ayarladım ve her yaptıgım değişiklik access.loga kaydet dosyaya a+ olarak davranır dosyayı okucak ve yeni bir dosya açıp eklicek logları.access.log hergun olursa şişer.bu yuzden yenı klasor oluşturduk ismi logs ve kayıtlar gunluk tutulur.Yapılan ziyaretler gun be gun tutuluyor. Ziyaret bilgileri tutulur.
+
+const fs = require('node:fs')
+const now = new Date()
+// console.log(typeof now, now)
+const today = now.toISOString().split('T')[0]
+// console.log(typeof today, today)
+app.use(morgan('combined', {
+    stream: fs.createWriteStream(`./logs/${today}.log`, { flags: 'a+' })
+}))
 
 /* ------------------------------------------------------- */
-
-//DOCUMENTATION
+//* DOCUMENTATION:
+// https://swagger-autogen.github.io/docs/
 // $ npm i swagger-autogen
-//   $ npm i swagger-ui-express
+// $ npm i swagger-ui-express
 // $ npm i redoc-express
 
+//? JSON
+app.use("/documents/json", (req, res) => {
+  res.sendFile("swagger.json", { root: "." });
+});
+
+//? SWAGGER:
 const swaggerUi = require("swagger-ui-express");
 const swaggerJson = require("./swagger.json");
 app.use(
@@ -78,25 +88,34 @@ app.use(
     swaggerOptions: { persistAuthorization: true },
   })
 );
+
+//? REDOC:
+const redoc = require("redoc-express");
+app.use(
+  "/documents/redoc",
+  redoc({
+    title: "PersonnelAPI",
+    specUrl: "/documents/json",
+  })
+);
+
 /* ------------------------------------------------------- */
-//middlewares:ler her zaman routeların uzerınde OLMALI.!
+// Middlewares:
+
+// Accept JSON:
 app.use(express.json());
 
-//session-cookies
+// Logging:
+app.use(require("./src/middlewares/logging"));
+
+// SessionsCookies:
 app.use(require("cookie-session")({ secret: process.env.SECRET_KEY }));
 
-// res.getModelList
+// res.getModelList():
 app.use(require("./src/middlewares/findSearchSortPage"));
 
-//authentication
-app.use(require("./src/middlewares/authentication"));
-
-//routes içindeki index dosyası
-app.use(require("./src/routes/"));
-/* ------------------------------------------------------- */
-
 /* ------------------------------------------------------- *
-! Authentication (SessionCookies):
+// Authentication (SessionCookies):
 // Login/Logout Control Middleware
 app.use(async (req, res, next) => {
 
@@ -119,24 +138,41 @@ app.use(async (req, res, next) => {
 })
 
 /* ------------------------------------------------------- */
-// Authentication (Simple Token): bunları routes içindeki index.jse aktardık.
+// Authentication (Simpe Token):
 
-// departments:
-// app.use("/department", require("./src/routes/department.router"));
-// personnel
-// app.use("/personnels", require("./src/routes/personnel.router"));
-// routes/index.js
+app.use(require("./src/middlewares/authentication"));
 
 /* ------------------------------------------------------- */
+// Routes:
 
-//home app
+// HomePath:
 app.all("/", (req, res) => {
   res.send({
     error: false,
     message: "Welcome to PERSONNEL API",
+    // session: req.session,
+    // isLogin: req.isLogin,
     user: req.user,
+    api: {
+      documents: {
+        swagger: "http://127.0.0.1:8000/documents/swagger",
+        redoc: "http://127.0.0.1:8000/documents/redoc",
+        json: "http://127.0.0.1:8000/documents/json",
+      },
+      contact: "contact@clarusway.com",
+    },
   });
 });
+
+// // /departments
+// app.use('/departments', require('./src/routes/department.router'))
+// // /personnels
+// app.use('/personnels', require('./src/routes/personnel.router'))
+
+// app.use(require('./src/routes/index'))
+app.use(require("./src/routes/"));
+
+/* ------------------------------------------------------- */
 
 // errorHandler:
 app.use(require("./src/middlewares/errorHandler"));
@@ -145,5 +181,5 @@ app.use(require("./src/middlewares/errorHandler"));
 app.listen(PORT, () => console.log("http://127.0.0.1:" + PORT));
 
 /* ------------------------------------------------------- */
-// Syncronization ("must be in commentLine"):
-// require("./src/helpers/sync")();
+// Syncronization (must be in commentLine):
+// require('./src/helpers/sync')()
