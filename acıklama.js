@@ -28,3 +28,5 @@
 
 //permission middlewaredir.
 // token mantıgı = kullanıcı kendını bnm verdıgım tokenla tanıtıcak girerken de tokenı gösterip giriş yapacak çıkarken de headerden sılecegız tokenını
+
+//OPENAPI = JSONA CEVİRİP  API AÇIKLAMA STANDARDI SWAGGER VS BUNLA ÇALIŞIR.

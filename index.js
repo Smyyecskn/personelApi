@@ -69,8 +69,8 @@ app.use(morgan('combined', {
 /* ------------------------------------------------------- */
 //* DOCUMENTATION:
 // https://swagger-autogen.github.io/docs/
-// $ npm i swagger-autogen
-// $ npm i swagger-ui-express
+// $ npm i swagger-autogen // routelarımı tarayıp json dosyası ortaya cıkarır.
+// $ npm i swagger-ui-express //jsonu gorsele donusturur.
 // $ npm i redoc-express
 
 //? JSON
@@ -79,7 +79,7 @@ app.use("/documents/json", (req, res) => {
 });
 
 //? SWAGGER:
-const swaggerUi = require("swagger-ui-express");
+const swaggerUi = require("swagger-ui-express"); //
 const swaggerJson = require("./swagger.json");
 app.use(
   "/documents/swagger",
