@@ -80,6 +80,13 @@ app.use(require("cookie-session")({ secret: process.env.SECRET_KEY }));
 // res.getModelList
 app.use(require("./src/middlewares/findSearchSortPage"));
 
+//authentication
+app.use(require("./src/middlewares/authentication"));
+
+//routes içindeki index dosyası
+app.use(require("./src/routes/"));
+/* ------------------------------------------------------- */
+
 /* ------------------------------------------------------- *
 ! Authentication (SessionCookies):
 // Login/Logout Control Middleware
@@ -122,11 +129,6 @@ app.all("/", (req, res) => {
     user: req.user,
   });
 });
-
-/* ------------------------------------------------------- */
-//routes içindeki index dosyası
-app.use(require("./src/routes/"));
-/* ------------------------------------------------------- */
 
 // errorHandler:
 app.use(require("./src/middlewares/errorHandler"));

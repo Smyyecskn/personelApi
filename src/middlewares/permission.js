@@ -1,6 +1,6 @@
 "use strict";
 /* -------------------------------------------------------
-    NODEJS EXPRESS | CLARUSWAY FullStack Teams
+    NODEJS EXPRESS | CLARUSWAY FullStack Team
 ------------------------------------------------------- */
 // Middleware: permissions (authorization)
 
@@ -30,7 +30,7 @@ module.exports = {
       req.user &&
       req.user.isActive &&
       (req.user.isAdmin ||
-        (req.user.isLead && req.user.departmentId == departmentId))
+        (req.user.isLead && req.user.departmentId == departmentId)) //her lead kendı departmentının bilgilerini görebilir.
     ) {
       next();
     } else {
@@ -43,13 +43,18 @@ module.exports = {
 
   isAdminOrOwn: (req, res, next) => {
     const personnelId = req.params?.id;
+
     if (
       req.user &&
       req.user.isActive &&
       (req.user.isAdmin || req.user._id == personnelId)
     ) {
       next();
-    } else res.errorStatusCode = 401;
-    throw new Error("You must login and to be Admin or Department Lead");
+    } else {
+      res.errorStatusCode = 403;
+      throw new Error(
+        "NoPermission: You must login and to be Admin or Record Owner."
+      );
+    }
   },
 };

@@ -20,8 +20,6 @@ router
   .patch(permissions.isAdmin, department.update)
   .delete(permissions.isAdmin, department.delete);
 
-router.get("/:id/personnels", department.personnels); //personel bilgilerini departmana göre route verdik. permission kullandık sadece AdminOrLead görebilsin diye. departmana göre personnel isimlerini bu şekilde gördük yani filtreledik. hem controller hemde findseacrh yazdık buraya
+router.get("/:id/personnels", permissions.isAdminOrLead, department.personnels); //personel bilgilerini departmana göre route verdik. permission kullandık sadece AdminOrLead görebilsin diye. departmana göre personnel isimlerini bu şekilde gördük yani filtreledik. hem controller hemde findseacrh yazdık buraya
 /* ------------------------------------------------------- */
 module.exports = router;
-
-permissions.isAdminOrLead;

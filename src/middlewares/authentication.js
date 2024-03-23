@@ -18,7 +18,7 @@ module.exports = async (req, res, next) => {
       "userId"
     ); //userIdye populate = personnel modelını de getir.
     // console.log(tokenData)
-    if (tokenData) req.user = tokenData.userId; // Personnel Data
+    if (tokenData) req.user = tokenData.userId; // Personnel Data. tokenım dogruysa tum personel bilgilerimi personelden alıp req.usera attım.
     // console.log(req.user) // 1-kullanıcının personeldeki bilgileri yani tüm user bilgileri obje içinde 2-userId:tokenDatadan gelen userId
   }
 
