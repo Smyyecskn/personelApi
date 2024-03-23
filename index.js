@@ -80,11 +80,8 @@ app.use(require("cookie-session")({ secret: process.env.SECRET_KEY }));
 // res.getModelList
 app.use(require("./src/middlewares/findSearchSortPage"));
 
-//routes içindeki index dosyası
-app.use(require("./src/routes/"));
-
 /* ------------------------------------------------------- *
-// Authentication (SessionCookies):
+! Authentication (SessionCookies):
 // Login/Logout Control Middleware
 app.use(async (req, res, next) => {
 
@@ -107,9 +104,9 @@ app.use(async (req, res, next) => {
 })
 
 /* ------------------------------------------------------- */
-// Authentication (Simple Token):
+// Authentication (Simple Token): bunları routes içindeki index.jse aktardık.
 
-// departments: bunları routes içindeki index.jse aktardık.
+// departments:
 // app.use("/department", require("./src/routes/department.router"));
 // personnel
 // app.use("/personnels", require("./src/routes/personnel.router"));
@@ -122,9 +119,13 @@ app.all("/", (req, res) => {
   res.send({
     error: false,
     message: "Welcome to PERSONNEL API",
+    user: req.user,
   });
 });
 
+/* ------------------------------------------------------- */
+//routes içindeki index dosyası
+app.use(require("./src/routes/"));
 /* ------------------------------------------------------- */
 
 // errorHandler:

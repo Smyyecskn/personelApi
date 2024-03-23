@@ -43,8 +43,8 @@ module.exports = {
 
         res.status(200).send({
           error: false,
-          user, //32den gelen user respose donen objeye user ismi verdik.
           tokens: tokenData.token, //token oluşturduk FE'ye biz bunu response döndük.
+          user, //32den gelen user respose donen objeye user ismi verdik.
         });
       } else {
         // user veya password yanlış girildiyse
