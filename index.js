@@ -75,16 +75,18 @@ app.use(morgan('combined', {
 
 //? JSON
 app.use("/documents/json", (req, res) => {
+  //urlsınde JSON dosya içeriğini göstermek istiyorum .içinde bulundugum klasorun ıcınde ara
   res.sendFile("swagger.json", { root: "." });
 });
 
 //? SWAGGER:
-const swaggerUi = require("swagger-ui-express"); //
+const swaggerUi = require("swagger-ui-express"); //middleware
 const swaggerJson = require("./swagger.json");
 app.use(
-  "/documents/swagger",
-  swaggerUi.serve,
+  "/documents/swagger", //route
+  swaggerUi.serve, //sistemi çalıştır
   swaggerUi.setup(swaggerJson, {
+    //ayarları yap 1. parametre gereken json dosyası 2. par token çalıştırma ayarı
     swaggerOptions: { persistAuthorization: true },
   })
 );
@@ -94,8 +96,8 @@ const redoc = require("redoc-express");
 app.use(
   "/documents/redoc",
   redoc({
-    title: "PersonnelAPI",
-    specUrl: "/documents/json",
+    title: "PersonnelAPI", //ayarlar başlık
+    specUrl: "/documents/json", //ÖNEMLİ verileri 77. satırdakı JSONDAN alıcak
   })
 );
 

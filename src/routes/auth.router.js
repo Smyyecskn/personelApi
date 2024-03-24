@@ -13,7 +13,8 @@ const router = require("express").Router();
 const auth = require("../controllers/auth.controller");
 
 router.post("/login", auth.login);
-router.get("/logout", auth.logout);
+router.get("/logout", auth.logout); //swagger .all metodunu desteklemez.
+// router.all("/logout", auth.logout); //swagger .all metodunu desteklemez.
 
 /* ------------------------------------------------------- */
 module.exports = router;

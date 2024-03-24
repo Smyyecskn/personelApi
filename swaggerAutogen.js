@@ -21,7 +21,7 @@ const options = {
 /* ------------------------------------------------------- */
 
 // const swaggerAutogen = require('swagger-autogen')({ openapi: '3.0.0', language: 'tr-tr' })
-const swaggerAutogen = require("swagger-autogen")();
+const swaggerAutogen = require("swagger-autogen")(); //
 const packageJson = require("./package.json");
 
 const document = {
@@ -30,7 +30,7 @@ const document = {
   // 	title: "Personnel API",
   // 	description: "Personnel Management API Service",
   // 	termsOfService: "http://www.clarusway.com",
-  // 	contact: { name: "Clarusway", email: "qadir@clarusway.com" },
+  // 	contact: { name: "Clarusway", email: "smyyeoztrk43@gmail.com" },
   // 	license: { name: "BSD License", },
   // },
   info: {
@@ -38,7 +38,7 @@ const document = {
     title: packageJson.title,
     description: packageJson.description,
     termsOfService: "http://www.clarusway.com",
-    contact: { name: packageJson.author, email: "qadir@clarusway.com" },
+    contact: { name: packageJson.author, email: "smyyeoztrk43@gmail.com" },
     license: { name: packageJson.license },
   },
   host: `${HOST}:${PORT}`,
@@ -56,6 +56,7 @@ const document = {
   },
   security: [{ Token: [] }],
   definitions: {
+    //!ÖNEMLİİ
     "/auth/login": {
       username: {
         type: "String",
@@ -84,8 +85,8 @@ const document = {
   },
 };
 
-const routes = ["./index.js"];
-const outputFile = "./swagger.json";
+const routes = ["./index.js"]; //routelara index.jsden başla
+const outputFile = "./swagger.json"; //çıktıyı swagger.jsona yaz.
 
 // Create JSON file: node swaggerAutogen.js çalıştırdık ve yanda bir swagger.js
 swaggerAutogen(outputFile, routes, document);
