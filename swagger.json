@@ -99,13 +99,14 @@
           {
             "name": "body",
             "in": "body",
-            "required": true,
             "schema": {
               "type": "object",
               "properties": {
-                "username": {
-                  "type": "string",
-                  "example": "Test F5"
+                "isLead": {
+                  "example": "any"
+                },
+                "departmentId": {
+                  "example": "any"
                 }
               }
             }
@@ -155,13 +156,11 @@
           {
             "name": "body",
             "in": "body",
-            "required": true,
             "schema": {
               "type": "object",
               "properties": {
-                "username": {
-                  "type": "string",
-                  "example": "Test F6"
+                "salary": {
+                  "example": "any"
                 }
               }
             }
@@ -212,13 +211,11 @@
           {
             "name": "body",
             "in": "body",
-            "required": true,
             "schema": {
               "type": "object",
               "properties": {
-                "username": {
-                  "type": "string",
-                  "example": "Test F6"
+                "salary": {
+                  "example": "any"
                 }
               }
             }
@@ -702,7 +699,7 @@
             },
             "default": {
               "type": "number",
-              "example": 1711253712263
+              "example": 1711274412871
             }
           }
         }
