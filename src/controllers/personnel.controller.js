@@ -31,9 +31,8 @@ module.exports = {
 
   create: async (req, res) => {
     /*
-      _swagger.deprecated = true
-      #swagger.ignore = true
- 
+        #swagger.tags = ["Personnels"]
+        #swagger.summary = "Create Personnel"
     */
     const data = await Personnel.create(req.body);
     // isLead Control:
@@ -70,8 +69,8 @@ module.exports = {
 
   update: async (req, res) => {
     /*
-      _swagger.deprecated = true
-      #swagger.ignore = true
+        #swagger.tags = ["Personnels"]
+        #swagger.summary = "Update Personnel"
     */
 
     // isLead Control:
